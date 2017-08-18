@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar row">
+        <div class="col-8"></div>
+        <% if @user %>
+            <form class="col-first"action="/sessions/<%=@user.id%>" method="post">
+                <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+                <input type="hidden" name="_method" value="delete">
+                <input class="nav-link" type="submit" class="btn btn-info" value="Log Out">
+            </form>
+        <% end %> 
+        <a class="nav-link" type="button" href="/bright_ideas">Bright Ideas</a>
+    </div>
+</nav>
+<div class="container">
+    <a href="/users/<%= @idea.user.id %>"><%= @idea.user.alias %></a> says:
+    <div class="border border-dark">
+        <%= @idea.content %>
+    </div>
+</div>
+    <hr>
+<div class="container">
+    <p>People who liked this post:</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Alias</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><a href="/users/<%= user.id %>"><%= user.alias %></a></td>
+                <td><%= user.name %></td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
